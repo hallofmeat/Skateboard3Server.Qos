@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31410.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Skateboard3Server.Qos", "src\Skateboard3Server.Qos\Skateboard3Server.Qos.csproj", "{C8FBA4D3-F0C9-45E0-B470-9AF433734A7B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Skateboard3Server.Qos.Tests", "tests\Skateboard3Server.Qos.Tests\Skateboard3Server.Qos.Tests.csproj", "{690384E8-6879-4878-B661-076EFAB2745F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C8FBA4D3-F0C9-45E0-B470-9AF433734A7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8FBA4D3-F0C9-45E0-B470-9AF433734A7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8FBA4D3-F0C9-45E0-B470-9AF433734A7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8FBA4D3-F0C9-45E0-B470-9AF433734A7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{690384E8-6879-4878-B661-076EFAB2745F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{690384E8-6879-4878-B661-076EFAB2745F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{690384E8-6879-4878-B661-076EFAB2745F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{690384E8-6879-4878-B661-076EFAB2745F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {48963931-38DB-4F4F-808D-CE0569A862B7}
+	EndGlobalSection
+EndGlobal
