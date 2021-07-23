@@ -43,7 +43,7 @@ namespace Skateboard3Server.Qos
                         serverOptions.ListenAnyIP(17502);
                         //TODO qos UDP 17499
                     })
-                        .UseStartup<Startup>();
+                    .UseStartup<Startup>();
                 });
         }
     }

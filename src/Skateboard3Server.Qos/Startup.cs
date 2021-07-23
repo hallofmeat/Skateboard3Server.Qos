@@ -19,6 +19,7 @@ namespace Skateboard3Server.Qos
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHostedService<QosService>();
             services.AddControllers(options => options.OutputFormatters.Add(new PoxOutputFormatter()));
         }
 

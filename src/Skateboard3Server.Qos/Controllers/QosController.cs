@@ -77,7 +77,8 @@ namespace Skateboard3Server.Qos.Controllers
             //TODO should be blocking (dont return til udp things are sent)
             return new FireTypeResponse
             {
-                FirewallType = (int)FirewallType.PortRestrictedCone //TODO detect all types
+                //FirewallType = (int)FirewallType.PortRestrictedCone //TODO detect all types
+                FirewallType = 2 //Figure out what the values should be
             };
         }
     }
