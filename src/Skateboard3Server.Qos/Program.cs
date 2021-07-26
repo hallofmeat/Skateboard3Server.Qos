@@ -41,7 +41,6 @@ namespace Skateboard3Server.Qos
                     {
                         //qos servers [gosgvaprod-qos01, gosiadprod-qos01, gossjcprod-qos01] (HTTP)
                         serverOptions.ListenAnyIP(17502);
-                        //TODO qos UDP 17499
                     })
                     .UseStartup<Startup>();
                 });

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
 using Skateboard3Server.Qos.Models;
@@ -58,7 +60,7 @@ namespace Skateboard3Server.Qos.Controllers
             return new FirewallResponse
             {
                 Ips = new List<int> { 16777343, 16777343 }, //TODO: pull from config
-                NumInterfaces = 1, //TODO: we should return 2 because we need 
+                NumInterfaces = 2, //TODO: we should return 2 because we need 
                 Ports = new List<int> { 17500, 17501 }, //TODO do these need to be different?
                 RequestId = 1234, //TODO: generate and store?
                 RequestSecret = 5678 //TODO: generate and store?
@@ -73,7 +75,8 @@ namespace Skateboard3Server.Qos.Controllers
             [FromQuery(Name = "inip")] int inIp,
             [FromQuery(Name = "inpt")] int inPort)
         {
-            Logger.Info($"FireType Request, RequestId:{requestId} RequestSecret:{requestSecret} InIp:{new IPAddress(inIp)} InPort:{inPort}");
+            //Dont parse inIp because it is garbage from rpcs3
+            Logger.Info($"FireType Request, RequestId:{requestId} RequestSecret:{requestSecret} InIp:{inIp} InPort:{inPort}");
             //TODO should be blocking (dont return til udp things are sent)
             return new FireTypeResponse
             {

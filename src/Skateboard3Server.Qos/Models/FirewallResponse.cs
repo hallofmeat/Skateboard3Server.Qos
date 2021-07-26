@@ -7,13 +7,15 @@ namespace Skateboard3Server.Qos.Models
     public class FirewallResponse
     {
 
-        [XmlElement(ElementName = "ips")]
+        [XmlArray("ips")]
+        [XmlArrayItem("ips")]
         public List<int> Ips { get; set; }
 
         [XmlElement(ElementName = "numinterfaces")]
         public int NumInterfaces { get; set; }
 
-        [XmlElement(ElementName = "ports")]
+        [XmlArray("ports")]
+        [XmlArrayItem("ports")]
         public List<int> Ports { get; set; }
 
         [XmlElement(ElementName = "requestid")]
@@ -23,5 +25,17 @@ namespace Skateboard3Server.Qos.Models
         public int RequestSecret { get; set; }
     }
 
+
+    public class FirewallIp
+    {
+        [XmlElement(ElementName = "ips")]
+        public int Ip { get; set; }
+    }
+
+    public class FirewallPort
+    {
+        [XmlElement(ElementName = "ports")]
+        public int Port { get; set; }
+    }
 
 }
