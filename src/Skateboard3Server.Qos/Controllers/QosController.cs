@@ -4,6 +4,7 @@ using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using NLog;
 using Skateboard3Server.Qos.Models;
 
@@ -13,7 +14,13 @@ namespace Skateboard3Server.Qos.Controllers
     [Route("qos")]
     public class QosController : ControllerBase
     {
+        private readonly QosConfig _config;
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+
+        public QosController(IOptions<QosConfig> config)
+        {
+            _config = config.Value;
+        }
 
         [HttpGet("qos")]
         [Produces("application/xml")]
@@ -31,7 +38,7 @@ namespace Skateboard3Server.Qos.Controllers
                         NumProbes = 0,
                         ProbeSize = 0,
                         QosPort = 17499, //TODO: maybe dont hardcode?
-                        QosIp = 16777343, //TODO: pull from config
+                        QosIp = IPAddress.Parse(_config.QosIp).Address,
                         RequestId = 1,
                         RequestSecret = 0
                     };
@@ -41,7 +48,7 @@ namespace Skateboard3Server.Qos.Controllers
                         NumProbes = 10,
                         ProbeSize = 1200,
                         QosPort = 17499, //TODO: maybe dont hardcode?
-                        QosIp = 16777343, //TODO: pull from config
+                        QosIp = IPAddress.Parse(_config.QosIp).Address,
                         RequestId = 1234, //TODO: generate and store?
                         RequestSecret = 5678 //TODO: generate and store?
                     };
@@ -59,7 +66,7 @@ namespace Skateboard3Server.Qos.Controllers
             //TODO pull from config
             return new FirewallResponse
             {
-                Ips = new List<int> { 16777343, 16777343 }, //TODO: pull from config
+                Ips = new List<long> { IPAddress.Parse(_config.FirewallPrimaryIp).Address, IPAddress.Parse(_config.FirewallSecondaryIp).Address },
                 NumInterfaces = 2, //TODO: we should return 2 because we need 
                 Ports = new List<int> { 17500, 17501 }, //TODO do these need to be different?
                 RequestId = 1234, //TODO: generate and store?

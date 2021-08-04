@@ -9,7 +9,7 @@ namespace Skateboard3Server.Qos.Models
 
         [XmlArray("ips")]
         [XmlArrayItem("ips")]
-        public List<int> Ips { get; set; }
+        public List<long> Ips { get; set; }
 
         [XmlElement(ElementName = "numinterfaces")]
         public int NumInterfaces { get; set; }

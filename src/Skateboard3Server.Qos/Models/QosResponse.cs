@@ -16,7 +16,7 @@ namespace Skateboard3Server.Qos.Models
         public int ProbeSize { get; set; }
 
         [XmlElement(ElementName = "qosip")]
-        public int QosIp { get; set; } //optional?
+        public long QosIp { get; set; } //optional?
 
         [XmlElement(ElementName = "requestid")]
         public int RequestId { get; set; } 
