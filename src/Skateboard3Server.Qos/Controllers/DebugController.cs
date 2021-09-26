@@ -24,7 +24,7 @@ namespace Skateboard3Server.Qos.Controllers
         }
     }
 
-    public class StatusUpdate
+    public class StatusUpdate //Keep in sync with Skateboard3Server
     {
         //TODO: maybe connected users?
         public DateTime StartTime { get; set; }
