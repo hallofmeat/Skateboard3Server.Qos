@@ -1,8 +1,7 @@
-﻿namespace Skateboard3Server.Qos.Models
+﻿namespace Skateboard3Server.Qos.Models;
+
+public enum QosType
 {
-    public enum QosType
-    {
-        PingTest = 1,
-        BandwidthTest = 2,
-    }
+    PingTest = 1,
+    BandwidthTest = 2,
 }

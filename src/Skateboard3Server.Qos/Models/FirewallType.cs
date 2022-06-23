@@ -1,8 +1,7 @@
-﻿namespace Skateboard3Server.Qos.Models
+﻿namespace Skateboard3Server.Qos.Models;
+
+public enum FirewallType
 {
-    public enum FirewallType
-    {
-        //TODO: figure out the the other firewall types
-        PortRestrictedCone = 2 //moderate?
-    }
+    //TODO: figure out the the other firewall types
+    PortRestrictedCone = 2 //moderate?
 }

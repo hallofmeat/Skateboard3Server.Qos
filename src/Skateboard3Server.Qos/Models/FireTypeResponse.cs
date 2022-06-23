@@ -1,12 +1,11 @@
 ﻿using System.Xml.Serialization;
 
-namespace Skateboard3Server.Qos.Models
-{
-    [XmlRoot(ElementName = "firetype")]
-    public class FireTypeResponse
-    {
+namespace Skateboard3Server.Qos.Models;
 
-        [XmlElement(ElementName = "firetype")]
-        public int FirewallType { get; set; }
-    }
+[XmlRoot(ElementName = "firetype")]
+public class FireTypeResponse
+{
+
+    [XmlElement(ElementName = "firetype")]
+    public int FirewallType { get; set; }
 }
