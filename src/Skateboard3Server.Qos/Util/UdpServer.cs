@@ -27,6 +27,9 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
+//TODO: make nullable compilable
+#nullable disable
+
 namespace Skateboard3Server.Qos.Util;
 
 /// <summary>

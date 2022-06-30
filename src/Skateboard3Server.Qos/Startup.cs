@@ -19,7 +19,9 @@ public class Startup
 
     public void ConfigureServices(IServiceCollection services)
     {
-        services.Configure<QosConfig>(Configuration.GetSection("Qos"));
+        services.AddOptions<QosConfig>()
+            .Bind(Configuration.GetSection("Qos"))
+            .ValidateDataAnnotations();
 
         services.AddHostedService<QosService>();
         services.AddControllers(options => options.OutputFormatters.Add(new PoxOutputFormatter()));

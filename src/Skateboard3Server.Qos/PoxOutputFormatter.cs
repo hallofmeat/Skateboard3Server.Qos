@@ -15,30 +15,31 @@ namespace Skateboard3Server.Qos;
 //https://github.com/dotnet/aspnetcore/blob/v3.1.15/src/Mvc/Mvc.Formatters.Xml/src/XmlSerializerOutputFormatter.cs
 public class PoxOutputFormatter : OutputFormatter
 {
-    private readonly ConcurrentDictionary<Type, object> _serializerCache = new ConcurrentDictionary<Type, object>();
+    private readonly ConcurrentDictionary<Type, XmlSerializer> _serializerCache = new();
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
 
-    private readonly XmlWriterSettings _writerSettings = new XmlWriterSettings
+    private readonly XmlWriterSettings _writerSettings = new()
     {
         Encoding = Encoding.ASCII,
-        OmitXmlDeclaration = false,
+        OmitXmlDeclaration = true, //We manually write this in the body write
         CloseOutput = false,
         CheckCharacters = false,
         Indent = false,
+        Async = true
     };
 
     public PoxOutputFormatter()
     {
-        SupportedMediaTypes.Add(MediaTypeHeaderValue.Parse("application/xml").CopyAsReadOnly());
+        SupportedMediaTypes.Add(MediaTypeHeaderValue.Parse("text/xml").CopyAsReadOnly());
     }
 
-    protected override bool CanWriteType(Type type)
+    protected override bool CanWriteType(Type? type)
     {
         return type != null;
     }
 
-    private void Serialize(XmlSerializer xmlSerializer, XmlWriter xmlWriter, object value)
+    private void Serialize(XmlSerializer xmlSerializer, XmlWriter xmlWriter, object? value)
     {
         //Remove all namespaces
         var namespaces = new XmlSerializerNamespaces();
@@ -49,30 +50,33 @@ public class PoxOutputFormatter : OutputFormatter
 
     private XmlSerializer GetCachedSerializer(Type type)
     {
-        if (!_serializerCache.TryGetValue(type, out var serializer))
+        if (_serializerCache.TryGetValue(type, out var serializer))
         {
-            try
-            {
-                // If the serializer does not support this type it will throw an exception.
-                serializer = new XmlSerializer(type);
-            }
-            catch (Exception ex)
-            {
-                Logger.Error(ex, $"Failed to create output XmlSerializer for {type.FullName}");
-            }
-
-            if (serializer != null)
-            {
-                _serializerCache.TryAdd(type, serializer);
-            }
+            return serializer;
         }
 
-        return (XmlSerializer)serializer;
+        try
+        {
+            // If the serializer does not support this type it will throw an exception.
+            serializer = new XmlSerializer(type);
+            _serializerCache.TryAdd(type, serializer);
+
+            return serializer;
+        }
+        catch (Exception ex)
+        {
+            Logger.Error(ex, $"Failed to create output XmlSerializer for {type.FullName}");
+            throw;
+        }
     }
 
     public override async Task WriteResponseBodyAsync(OutputFormatterWriteContext context)
     {
-        //TODO maybe need wrapping logic?
+        if (context.ObjectType == null)
+        {
+            throw new Exception("ObjectType is null, unable to serialize");
+        }
+
         var value = context.Object;
         var xmlSerializer = GetCachedSerializer(context.ObjectType);
 
@@ -86,7 +90,9 @@ public class PoxOutputFormatter : OutputFormatter
         {
             await using (var textWriter = context.WriterFactory(responseStream, Encoding.ASCII))
             {
-                using var xmlWriter = XmlWriter.Create(textWriter, _writerSettings);
+                //Hack because XmlWriter really wants to add encoding="us-ascii" which segfaults skate 3
+                await textWriter.WriteAsync("<?xml version=\"1.0\"?>");
+                await using var xmlWriter = XmlWriter.Create(textWriter, _writerSettings);
                 Serialize(xmlSerializer, xmlWriter, value);
             }
 

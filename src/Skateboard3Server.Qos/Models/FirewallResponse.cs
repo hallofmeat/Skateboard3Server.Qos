@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
 
+#pragma warning disable CS8618
+
 namespace Skateboard3Server.Qos.Models;
 
 [XmlRoot(ElementName = "firewall")]
